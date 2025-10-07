@@ -268,8 +268,15 @@ function distinct(arr) {
  *    createNDimensionalArray(4, 2) => [[[[0, 0], [0, 0]], [[0, 0], [0, 0]]], [[[0, 0], [0, 0]], [[0, 0], [0, 0]]]]
  *    createNDimensionalArray(1, 1) => [0]
  */
-function createNDimensionalArray(/* n, size */) {
-  throw new Error('Not implemented');
+function createNDimensionalArray(n, size) {
+  if (n === 1) {
+    return Array(size).fill(0);
+  }
+  return Array(size)
+    .fill(null)
+    .map(() => {
+      return createNDimensionalArray(n - 1, size);
+    });
 }
 
 /**
@@ -283,8 +290,8 @@ function createNDimensionalArray(/* n, size */) {
  *    flattenArray(['a', ['b', ['c', 'd'], 'e'], 'f']) => ['a', 'b', 'c', 'd', 'e', 'f']
  *    flattenArray([1, 2, 3, 4]) => [1, 2, 3, 4]
  */
-function flattenArray(/* nestedArray */) {
-  throw new Error('Not implemented');
+function flattenArray(nestedArray) {
+  return nestedArray.flat(100);
 }
 
 /**
@@ -300,8 +307,8 @@ function flattenArray(/* nestedArray */) {
  *   selectMany([[1, 2], [3, 4], [5, 6]], (x) => x) =>   [ 1, 2, 3, 4, 5, 6 ]
  *   selectMany(['one','two','three'], (x) => x.split('')) =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) {
+  return arr.flatMap((item) => childrenSelector(item));
 }
 
 /**
@@ -349,8 +356,8 @@ function createChunks(/* arr, chunkSize */) {
  *    generateOdds(2) => [ 1, 3 ]
  *    generateOdds(5) => [ 1, 3, 5, 7, 9 ]
  */
-function generateOdds(/* len */) {
-  throw new Error('Not implemented');
+function generateOdds(len) {
+  return Array.from(Array(len * 2).keys()).filter((el) => el % 2 === 1);
 }
 
 /**
@@ -381,8 +388,8 @@ function getElementByIndices(/* arr, indices */) {
  *  getFalsyValuesCount([ -1, 'false', null, 0 ]) => 2
  *  getFalsyValuesCount([ null, undefined, NaN, false, 0, '' ]) => 6
  */
-function getFalsyValuesCount(/* arr */) {
-  throw new Error('Not implemented');
+function getFalsyValuesCount(arr) {
+  return arr.filter((e) => !e).length;
 }
 
 /**
@@ -418,8 +425,13 @@ function getIdentityMatrix(/* n */) {
  *    getIndicesOfOddNumbers([2, 4, 6, 8, 10]) => []
  *    getIndicesOfOddNumbers([11, 22, 33, 44, 55]) => [0, 2, 4]
  */
-function getIndicesOfOddNumbers(/* numbers */) {
-  throw new Error('Not implemented');
+function getIndicesOfOddNumbers(numbers) {
+  return numbers.reduce((acc, element, index) => {
+    if (element % 2) {
+      acc.push(index);
+    }
+    return acc;
+  }, []);
 }
 
 /**
@@ -432,8 +444,14 @@ function getIndicesOfOddNumbers(/* numbers */) {
  *    getHexRGBValues([ 0, 255, 16777215]) => [ '#000000', '#0000FF', '#FFFFFF' ]
  *    getHexRGBValues([]) => []
  */
-function getHexRGBValues(/* arr */) {
-  throw new Error('Not implemented');
+function getHexRGBValues(arr) {
+  return arr
+    .map((e) => e.toString(16))
+    .map((e) => {
+      const l = 6 - e.length;
+      const str = new Array(l).fill(0).join('');
+      return `#${str}${e.toUpperCase()}`;
+    });
 }
 
 /**
@@ -450,8 +468,8 @@ function getHexRGBValues(/* arr */) {
  *   getMaxItems([ 10, 2, 7, 5, 3, -5 ], 3) => [ 10, 7, 5 ]
  *   getMaxItems([ 10, 10, 10, 10 ], 3) => [ 10, 10, 10 ]
  */
-function getMaxItems(/* arr, n */) {
-  throw new Error('Not implemented');
+function getMaxItems(arr, n) {
+  return arr.sort((a, b) => b - a).slice(0, n);
 }
 
 /**
@@ -533,8 +551,23 @@ function shiftArray(/* arr, n */) {
  *   sortDigitNamesByNumericOrder([ 'nine','eight','nine','eight' ]) => [ 'eight','eight','nine','nine']
  *   sortDigitNamesByNumericOrder([ 'one','one','one','zero' ]) => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  const sortedDigits = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
+  return arr
+    .map((item) => sortedDigits.indexOf(item))
+    .sort()
+    .map((item) => sortedDigits[item]);
 }
 
 /**
