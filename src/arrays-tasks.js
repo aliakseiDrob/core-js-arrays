@@ -208,7 +208,6 @@ function getTail(arr, n) {
   return arr.slice(arr.length - n);
 }
 
-
 /**
  * Returns the doubled array - elements of the specified array
  * are repeated twice using original order.
